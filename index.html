@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Onboarding training agenda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Wall Street English palette */
+  --blue:#003359; --blue75:#406683; --blue35:#a6b8c5;
+  --red:#f12c3e; --red75:#f5616e; --red35:#fab5bc;
+  --cyan:#64cfe9; --cyan75:#8bdbef; --cyan35:#c9eef7;
+  --lightblue:#0082a9; --lightblue35:#a6d3e1;
+  --peach:#ff8e7e; --peach35:#ffd8d2;
+  --skin:#ffc3a4; --skin35:#ffeadf;
+  --grey:#f1f1f1;
+
+  --surface:#ffffff; --page:var(--grey); --ink:var(--blue); --ink-soft:#3d5a72;
+  --ink-faint:#6b8095; --line:rgba(0,51,89,.14); --rail:var(--blue35);
+  --shadow:0 1px 2px rgba(0,51,89,.06), 0 10px 22px -8px rgba(0,51,89,.14);
+  --band:#eef9fd;
+  --chip-360-bg:var(--cyan35); --chip-360-ink:var(--blue);
+  --chip-local-bg:var(--skin35); --chip-local-ink:#8a4a2e;
+  --chip-new-bg:var(--blue); --chip-new-ink:#ffffff;
+  --chip-gap-bg:var(--red); --chip-gap-ink:#ffffff;
+  --stamp-bg:#e3eaf0;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --surface:#0d2437; --page:#07192a; --ink:#e8f1f7; --ink-soft:#bcd0de;
+    --ink-faint:#8ba5b8; --line:rgba(166,184,197,.2); --rail:#2b4d68;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 22px -10px rgba(0,0,0,.6);
+    --band:#0a2c42;
+    --chip-360-bg:#0a4a5e; --chip-360-ink:var(--cyan35);
+    --chip-local-bg:#5c3323; --chip-local-ink:var(--skin35);
+    --chip-new-bg:var(--cyan35); --chip-new-ink:#00253f;
+    --stamp-bg:#14344b;
+  }
+}
+:root[data-theme="dark"]{
+  --surface:#0d2437; --page:#07192a; --ink:#e8f1f7; --ink-soft:#bcd0de;
+  --ink-faint:#8ba5b8; --line:rgba(166,184,197,.2); --rail:#2b4d68;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 22px -10px rgba(0,0,0,.6);
+  --band:#0a2c42;
+  --chip-360-bg:#0a4a5e; --chip-360-ink:var(--cyan35);
+  --chip-local-bg:#5c3323; --chip-local-ink:var(--skin35);
+  --chip-new-bg:var(--cyan35); --chip-new-ink:#00253f;
+  --stamp-bg:#14344b;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--page);color:var(--ink);
+  font-family:'Noto Sans',Arial,system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.5;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px 96px}
+
+header{padding:44px 0 8px}
+.rule{width:64px;height:6px;background:var(--red);border-radius:3px;margin-bottom:22px}
+.brandname{font-weight:700;font-size:14px;color:var(--ink-soft);margin:0 0 26px}
+h1{font-size:clamp(30px,5vw,46px);line-height:1.12;font-weight:800;margin:0 0 16px;
+  letter-spacing:-.015em;color:var(--ink);max-width:17ch}
+.lede{margin:0;max-width:60ch;color:var(--ink-soft);font-size:17px}
+.meta{margin-top:22px;display:flex;flex-wrap:wrap;gap:8px}
+.stamp{font-size:12px;font-weight:700;padding:5px 11px;border-radius:9999px;
+  background:var(--stamp-bg);color:var(--ink-soft)}
+.stamp.hot{background:var(--red);color:#fff}
+
+.rolebar{position:sticky;top:0;z-index:20;background:var(--page);padding:14px 0 12px;margin-top:34px;
+  border-bottom:1px solid var(--line)}
+.roles{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.roles::-webkit-scrollbar{display:none}
+.role{flex:none;border:1px solid var(--line);background:var(--surface);color:var(--ink-soft);font:inherit;
+  font-size:14px;font-weight:700;padding:9px 16px;border-radius:9999px;cursor:pointer;
+  transition:background .15s,color .15s,border-color .15s}
+.role:hover{background:var(--cyan35);border-color:var(--cyan35)}
+.role[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+:root[data-theme="dark"] .role[aria-pressed="true"]{background:var(--cyan35);color:#00253f}
+.role:focus-visible,.seg button:focus-visible{outline:2px solid var(--lightblue);outline-offset:2px}
+
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:28px 0 22px}
+.cell{background:var(--surface);padding:18px 20px}
+.cell .n{font-size:26px;font-weight:800;line-height:1.1;letter-spacing:-.01em;color:var(--ink)}
+.cell .k{font-size:13px;color:var(--ink-faint);margin-top:4px}
+.cell .was{font-size:12px;color:var(--ink-faint);margin-top:2px}
+.cell.cut .n{color:var(--red)}
+.cell.on .n{color:var(--lightblue)}
+:root[data-theme="dark"] .cell.on .n{color:var(--cyan)}
+
+.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:34px}
+.seg{display:inline-flex;background:var(--stamp-bg);border-radius:9999px;padding:3px;flex-wrap:wrap}
+.seg button{border:0;background:transparent;color:var(--ink-soft);font:inherit;font-size:13px;font-weight:700;
+  padding:7px 14px;border-radius:9999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.note{font-size:13px;color:var(--ink-faint)}
+
+.phase{position:relative;padding-left:28px;margin-bottom:8px}
+.phase::before{content:"";position:absolute;left:5px;top:12px;bottom:-8px;width:2px;background:var(--rail)}
+.phase:last-of-type::before{bottom:auto;height:14px}
+.phase>.dot{position:absolute;left:0;top:8px;width:12px;height:12px;border-radius:50%;
+  background:var(--surface);border:2px solid var(--rail)}
+.phase.mid>.dot{border-color:var(--lightblue);background:var(--lightblue)}
+.phase.end>.dot{border-color:var(--red);background:var(--red)}
+.phase-head{padding:2px 0 14px}
+.phase-head h2{margin:0;font-size:20px;font-weight:700;letter-spacing:-.01em}
+.phase-head p{margin:5px 0 0;font-size:14px;color:var(--ink-faint);max-width:62ch}
+.phase.mid .phase-body{background:var(--band);border-radius:16px;padding:18px}
+.phase-body{margin-bottom:26px}
+
+.topic{margin-bottom:18px}
+.topic:last-child{margin-bottom:0}
+.topic h3{margin:0 0 10px;font-size:14px;font-weight:700;color:var(--ink-faint)}
+.list{display:flex;flex-direction:column;gap:10px}
+
+.item{background:var(--surface);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow);
+  display:grid;grid-template-columns:1fr auto;gap:6px 18px;align-items:start}
+.item .m{font-weight:700;font-size:15px;margin:0}
+.item .w{grid-column:1/2;margin:0;font-size:14px;color:var(--ink-soft);max-width:72ch}
+.item .rep{grid-column:1/2;margin:6px 0 0;font-size:12px;color:var(--ink-faint)}
+.item .t{grid-column:2/3;grid-row:1/3;text-align:right;white-space:nowrap}
+.item .t .big{font-weight:700;font-size:15px}
+.item .t .sub{display:block;font-size:12px;color:var(--ink-faint);margin-top:3px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:7px}
+.chip{font-size:11px;font-weight:700;padding:3px 9px;border-radius:9999px}
+.chip.c360{background:var(--chip-360-bg);color:var(--chip-360-ink)}
+.chip.clocal{background:var(--chip-local-bg);color:var(--chip-local-ink)}
+.chip.cnew{background:var(--chip-new-bg);color:var(--chip-new-ink)}
+.chip.cgap{background:var(--chip-gap-bg);color:var(--chip-gap-ink)}
+.chip.cwip{background:transparent;color:var(--ink-faint);border:1px dashed var(--rail)}
+.item.iswip{opacity:.9}
+.prereq{display:flex;gap:12px;align-items:baseline;background:var(--surface);border-left:6px solid var(--red);
+  border-radius:8px;padding:14px 18px;margin-bottom:28px;box-shadow:var(--shadow)}
+.prereq b{font-size:14px;white-space:nowrap}
+.prereq span{font-size:14px;color:var(--ink-soft)}
+.inherit{border:1.5px dashed var(--rail);border-radius:14px;padding:16px 18px;margin-bottom:10px}
+.inherit p{margin:0;font-size:14px;color:var(--ink-faint);max-width:64ch}
+.empty{font-size:14px;color:var(--ink-faint);padding:6px 0}
+
+
+@media (max-width:640px){
+  .wrap{padding:0 16px 72px}
+  .item{grid-template-columns:1fr}
+  .item .t{grid-column:1;grid-row:auto;text-align:left}
+  .item .t .sub{display:inline;margin-left:8px}
+  .phase.mid .phase-body{padding:14px 12px}
+}
+@media print{.rolebar,.controls{display:none}body{background:#fff}.item{box-shadow:none;border:1px solid #ddd;break-inside:avoid}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="rule"></div>
+  <p class="brandname">Wall Street English</p>
+  <h1>Onboarding training agenda</h1>
+  <p class="lede">The full journey for each role: time in the center as a student, self-access
+     content on the Learning Library, and a final observation session with the line manager.</p>
+  <div class="meta">
+    <span class="stamp hot">New version</span>
+    <span class="stamp">September 2026</span>
+    <span class="stamp">Replaces QN-04-D27-V2</span>
+  </div>
+</header>
+
+<div class="rolebar"><div class="roles" id="roles" role="group" aria-label="Choose a role"></div></div>
+<div class="summary" id="summary"></div>
+
+<div class="controls">
+  <div class="seg" role="group" aria-label="Filter">
+    <button data-f="all" aria-pressed="true">Everything</button>
+    <button data-f="360" aria-pressed="false">Learning Library</button>
+    <button data-f="local" aria-pressed="false">In center</button>
+    <button data-f="new" aria-pressed="false">Under production</button>
+  </div>
+  <span class="note" id="count"></span>
+</div>
+
+<main id="journey"></main>
+
+</div>
+
+<script>
+const DATA = {"Service Manager": {"oldHours": 21.8, "newHours": 9.4, "pre": [{"module": "Job Description: Roles and Responsibilities", "wiifm": "I'll understand my key roles and responsibilities within the organization.", "status": "Supplied locally", "mode": "Local session", "emodule": 0, "post": 0, "ilt": 0, "local": 60, "total": 60, "flag": "carried", "topic": "Student experience"}], "path": [{"module": "Quality Control", "wiifm": "I'll explore my role as quality controller and ways of working with the Center team to guarantee quality.", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 20, "post": 0, "ilt": 0, "local": 0, "total": 20, "flag": "carried", "topic": "Management techniques"}, {"module": "Coaching Techniques", "wiifm": "I'll be able to use the GROW model to coach and support staff with performance, learning and development.", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 20, "post": 0, "ilt": 0, "local": 0, "total": 20, "flag": "carried", "topic": "Management techniques"}, {"module": "The 5Ps of Effective Meetings", "wiifm": "I'll be able to prepare and lead meetings that drive performance and boost staff motivation.", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 25, "post": 0, "ilt": 0, "local": 0, "total": 25, "flag": "carried", "topic": "Management techniques"}, {"module": "Delegating Effectively", "wiifm": "I'll be able to delegate tasks successfully and effectively in order to empower staff and create management efficiencies.", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 20, "post": 0, "ilt": 0, "local": 0, "total": 20, "flag": "carried", "topic": "Management techniques"}, {"module": "Sales foundations", "wiifm": "I'll be able to recognize our six buyer personas, tell the difference between a prospect's issues and needs, and walk through every step of the Wall Street English sales process.", "topic": "Management techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 60, "post": 0, "ilt": 0, "local": 0, "total": 60, "flag": "new", "note": "Replaces S01 to S04"}, {"module": "Time Management", "wiifm": "I'll be able to differentiate between important and urgent tasks to plan more effectively, and apply a variety of time management techniques depending on needs.", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 0, "post": 0, "ilt": 0, "local": 0, "total": 0, "flag": "wip", "topic": "Center operations"}, {"module": "Analyzing Performance with BI Tools and Monthly Action Planning", "wiifm": "I'll be able to anaylze monthly Center performance using BI Tools, identify areas for improvement and create a SMART action plan to drive performance.", "status": "Supplied locally", "mode": "Local session", "emodule": 0, "post": 0, "ilt": 0, "local": 90, "total": 90, "flag": "carried", "topic": "Center operations"}, {"module": "Customer Satisfaction Survey and Biannual Action Planning", "wiifm": "I'll be able to analyze the results of the Customer Satisfcation Survey, identify focus areas to increase satisfaction and create a SMART action plan to drive performance.", "status": "Supplied locally", "mode": "Local session", "emodule": 0, "post": 0, "ilt": 0, "local": 60, "total": 60, "flag": "carried", "topic": "Center operations"}, {"module": "Class Planning - Class Planner and Class Planner Report", "wiifm": "I'll be able to plan an efficent class schedule for my Center/Territory across all channels.", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 30, "post": 0, "ilt": 0, "local": 0, "total": 30, "flag": "carried", "topic": "To confirm"}, {"module": "Driving Progress - Messaging, BI Tools, and Action List", "wiifm": "I'll be able to recognize how messaging and the Action List work together to support Student Follow Up, and prioritize actions using the data on the BI Tools.", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 60, "post": 0, "ilt": 0, "local": 0, "total": 60, "flag": "carried", "topic": "To confirm"}], "obs": [{"module": "Observation, role-play and performance review", "wiifm": "A coaching conversation using GROW, a centre meeting run end to end, a delegation conversation, and a monthly action plan defended to the line manager.", "status": "Supplied locally", "mode": "Observed session", "emodule": 0, "post": 0, "ilt": 120, "local": 0, "total": 120, "flag": "new", "topic": "Sign-off"}], "inheritsPre": true, "prereq": "the Teacher and Coach paths"}, "Teacher": {"oldHours": 49.4, "newHours": 22.3, "pre": [{"module": "Complete Placement Test", "wiifm": "I’ll recognize how the Placement Test works and how Students are placed at the correct Level.", "status": "Supplied locally", "mode": "in-center or virtual", "emodule": 0, "post": 0, "ilt": 0, "local": 30, "total": 30, "flag": "carried"}, {"module": "Attend First Appointment/ Sales Presentation", "wiifm": "I’ll experience how Consultants provide solutions for the issues and needs of a Student within the Sales Presentation.", "status": "Supplied locally", "mode": "in-center or virtual", "emodule": 0, "post": 0, "ilt": 0, "local": 45, "total": 45, "flag": "carried"}, {"module": "Complete Student Onboarding (Digital Onboarding and Personal Welcome)", "wiifm": "I’ll discover how we onboard Students, introduce the Wall Street English Method, and motivate them through long and short-term goal setting.", "status": "Supplied locally", "mode": "in-center or virtual", "emodule": 0, "post": 0, "ilt": 0, "local": 75, "total": 75, "flag": "carried"}, {"module": "Multimedia study and Digital Student Workbook (one full Unit)", "wiifm": "I’ll familiarize myself with Core Course content and understand how Students interact with the Wall Street English Method.", "status": "Supplied locally", "mode": "in-center or virtual", "emodule": 0, "post": 0, "ilt": 0, "local": 250, "total": 250, "flag": "carried"}, {"module": "Attend Encounter", "wiifm": "I’ll discover how the Multimedia content in Core Course connects with classroom-based learning in Encounters.", "status": "Supplied locally", "mode": "in-center or virtual", "emodule": 0, "post": 0, "ilt": 0, "local": 60, "total": 60, "flag": "carried"}, {"module": "Attend Complementary Class", "wiifm": "I’ll be able to recognize the difference between Encounters and Complementary Classes.", "status": "Supplied locally", "mode": "in-center or virtual", "emodule": 0, "post": 0, "ilt": 0, "local": 60, "total": 60, "flag": "carried"}, {"module": "Attend Social Club", "wiifm": "I’ll be able to recognize how Social Clubs complement the full suite of Wall Street English classes, help to facilitate learning and maximize Student communication.", "status": "Supplied locally", "mode": "in-center or virtual", "emodule": 0, "post": 0, "ilt": 0, "local": 60, "total": 60, "flag": "carried"}, {"module": "Job Description: Roles and Responsibilities", "wiifm": "I'll understand my key roles and responsibilities within the organization.", "status": "Supplied locally", "mode": "Local session", "emodule": 0, "post": 0, "ilt": 0, "local": 60, "total": 60, "flag": "carried", "topic": "Student experience"}], "path": [{"module": "Who we are", "wiifm": "I'll be able to explain where Wall Street English came from, what we stand for, and what makes us premium.", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 20, "post": 0, "ilt": 0, "local": 0, "total": 20, "flag": "new", "note": "Replaces C01 and C02", "topic": "Essentials"}, {"module": "What we do", "wiifm": "I'll be able to explain the Method, the Learning System, the customer journey and how we compare with other ways of learning English.", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 20, "post": 0, "ilt": 0, "local": 0, "total": 20, "flag": "new", "note": "Replaces C03 to C07", "topic": "Essentials"}, {"module": "Learner Psychology", "wiifm": "I'll have a better grasp of how adults learn and how the Wall Street English Method supports adult learning.", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 30, "post": 0, "ilt": 0, "local": 0, "total": 30, "flag": "carried", "topic": "Teaching techniques"}, {"module": "Graded Language", "wiifm": "I'll be able to use graded language so students always understand what's happening and feel confident.", "topic": "Teaching techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 30, "post": 0, "ilt": 0, "local": 0, "total": 30, "flag": "carried"}, {"module": "Elicitation in the Wall Street English Method", "wiifm": "I'll be able to use a variety of techniques to elicit target language from students.", "topic": "Teaching techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 30, "post": 0, "ilt": 0, "local": 0, "total": 30, "flag": "carried"}, {"module": "Concept Checking", "wiifm": "I'll be able to confirm students understand the target language using concept questions and timelines.", "topic": "Teaching techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 20, "post": 0, "ilt": 0, "local": 0, "total": 20, "flag": "carried"}, {"module": "How to Create and Deliver Effective Instructions", "wiifm": "I'll be able to deliver clear, simple instructions and check that students have understood them.", "topic": "Teaching techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 40, "post": 0, "ilt": 0, "local": 0, "total": 40, "flag": "carried"}, {"module": "Correction Techniques", "wiifm": "I'll be able to tell a mistake from an error, recognize the common types, and correct in a way that keeps students comfortable.", "topic": "Teaching techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 25, "post": 0, "ilt": 0, "local": 0, "total": 25, "flag": "carried"}, {"module": "Delivering Dynamic Classes", "wiifm": "I'll be able to use engaging teaching techniques that keep classes interactive, dynamic and student-centered.", "topic": "Teaching techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 20, "post": 0, "ilt": 0, "local": 0, "total": 20, "flag": "carried", "note": "Was part of the Social Club module"}, {"module": "Encounter Assessment – Part One", "wiifm": "I'll have the skills and knowledge to assess students accurately in the Encounter.", "topic": "Teaching techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 30, "post": 0, "ilt": 0, "local": 0, "total": 30, "flag": "carried", "note": "Encounter Assessment is now two modules"}, {"module": "Encounter Assessment – Part Two", "wiifm": "I'll be able to grade students appropriately and apply the assessment criteria consistently.", "topic": "Teaching techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 30, "post": 0, "ilt": 0, "local": 0, "total": 30, "flag": "carried"}, {"module": "Delivering Effective Feedback in the Encounter", "wiifm": "I'll recognize why verbal and written feedback matters, and identify what to give feedback on.", "topic": "Teaching techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 60, "post": 0, "ilt": 0, "local": 0, "total": 60, "flag": "carried"}, {"module": "How to deliver an outstanding Encounter", "wiifm": "I'll be equipped to deliver an inspiring Encounter, and understand what makes one outstanding.", "topic": "Teaching techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 30, "post": 0, "ilt": 0, "local": 0, "total": 30, "flag": "carried", "note": "Replaces the local Encounter structure session"}, {"module": "How to deliver an Outstanding Complementary Class", "wiifm": "I'll be able to deliver a Complementary Class that keeps students communicating.", "topic": "Teaching techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 30, "post": 0, "ilt": 0, "local": 0, "total": 30, "flag": "carried", "note": "Replaces the local Complementary Class structure session"}, {"module": "Planning the Perfect Social Club", "wiifm": "I'll be able to plan and deliver dynamic Social Clubs that maximize student communication.", "topic": "Teaching techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 40, "post": 0, "ilt": 0, "local": 0, "total": 40, "flag": "carried"}], "obs": [{"module": "Observation, role-play and performance review", "wiifm": "Teach an Encounter, a Complementary Class and a Social Club. Graded language, eliciting, correction and personalized feedback checked live against the observation form.", "status": "Supplied locally", "mode": "Observed session", "emodule": 0, "post": 0, "ilt": 240, "local": 0, "total": 240, "flag": "new", "topic": "Sign-off"}]}, "Coach": {"oldHours": 58.8, "newHours": 21.6, "pre": [{"module": "Complete Placement Test", "wiifm": "I’ll recognize how the Placement Test works and how Students are placed at the correct Level.", "status": "Supplied locally", "mode": "in-center or virtual", "emodule": 0, "post": 0, "ilt": 0, "local": 30, "total": 30, "flag": "carried"}, {"module": "Attend First Appointment/ Sales Presentation", "wiifm": "I’ll experience how Consultants provide solutions for the issues and needs of a Student within the Sales Presentation.", "status": "Supplied locally", "mode": "in-center or virtual", "emodule": 0, "post": 0, "ilt": 0, "local": 45, "total": 45, "flag": "carried"}, {"module": "Complete Student Onboarding (Digital Onboarding and Personal Welcome)", "wiifm": "I’ll discover how we onboard Students, introduce the Wall Street English Method, and motivate them through long and short-term goal setting.", "status": "Supplied locally", "mode": "in-center or virtual", "emodule": 0, "post": 0, "ilt": 0, "local": 75, "total": 75, "flag": "carried"}, {"module": "Multimedia study and Digital Student Workbook (one full Unit)", "wiifm": "I’ll familiarize myself with Core Course content and understand how Students interact with the Wall Street English Method.", "status": "Supplied locally", "mode": "in-center or virtual", "emodule": 0, "post": 0, "ilt": 0, "local": 240, "total": 240, "flag": "carried"}, {"module": "Attend Encounter", "wiifm": "I’ll discover how the Multimedia content in Core Course connects with classroom-based learning in Encounters.", "status": "Supplied locally", "mode": "in-center or virtual", "emodule": 0, "post": 0, "ilt": 0, "local": 60, "total": 60, "flag": "carried"}, {"module": "Attend Complementary Class", "wiifm": "I’ll be able to recognize the difference between Encounters and Complementary Classes.", "status": "Supplied locally", "mode": "in-center or virtual", "emodule": 0, "post": 0, "ilt": 0, "local": 60, "total": 60, "flag": "carried"}, {"module": "Attend Social Club", "wiifm": "I’ll be able to recognize how Social Clubs complement the full suite of Wall Street English classes, help to facilitate learning and maximize Student communication.", "status": "Supplied locally", "mode": "in-center or virtual", "emodule": 0, "post": 0, "ilt": 0, "local": 60, "total": 60, "flag": "carried"}, {"module": "Job Description: Roles and Responsibilities", "wiifm": "I'll understand my key roles and responsibilities within the organization.", "status": "Supplied locally", "mode": "Local session", "emodule": 0, "post": 0, "ilt": 0, "local": 60, "total": 60, "flag": "carried", "topic": "Student experience"}], "path": [{"module": "Who we are", "wiifm": "I'll be able to explain where Wall Street English came from, what we stand for, and what makes us premium.", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 20, "post": 0, "ilt": 0, "local": 0, "total": 20, "flag": "new", "note": "Replaces C01 and C02", "topic": "Essentials"}, {"module": "What we do", "wiifm": "I'll be able to explain the Method, the Learning System, the customer journey and how we compare with other ways of learning English.", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 20, "post": 0, "ilt": 0, "local": 0, "total": 20, "flag": "new", "note": "Replaces C03 to C07", "topic": "Essentials"}, {"module": "Learner Psychology", "wiifm": "I'll be able to recognize how adults learn, what motivates them, and what gets in the way.", "topic": "Coaching techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 30, "post": 0, "ilt": 0, "local": 0, "total": 30, "flag": "carried", "note": "Rescued from the previous Learning Library"}, {"module": "Graded Language", "wiifm": "I'll be able to use graded language so students always understand what's happening and feel confident.", "topic": "Coaching techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 30, "post": 0, "ilt": 0, "local": 0, "total": 30, "flag": "carried", "note": "Shared with the Teacher path"}, {"module": "Elicitation in the Wall Street English Method", "wiifm": "I'll be able to use a variety of techniques to elicit language from students rather than telling them.", "topic": "Coaching techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 30, "post": 0, "ilt": 0, "local": 0, "total": 30, "flag": "carried", "note": "Shared with the Teacher path"}, {"module": "Concept Checking", "wiifm": "I'll be able to confirm students have understood, using concept questions rather than asking if they're clear.", "topic": "Coaching techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 20, "post": 0, "ilt": 0, "local": 0, "total": 20, "flag": "carried", "note": "Shared with the Teacher path"}, {"module": "How to Create and Deliver Effective Instructions", "wiifm": "I'll be able to give clear, simple instructions and check that students have understood them.", "topic": "Coaching techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 40, "post": 0, "ilt": 0, "local": 0, "total": 40, "flag": "carried", "note": "Shared with the Teacher path"}, {"module": "Correction Techniques", "wiifm": "I'll be able to tell a mistake from an error and correct in a way that keeps students comfortable.", "topic": "Coaching techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 25, "post": 0, "ilt": 0, "local": 0, "total": 25, "flag": "carried", "note": "Shared with the Teacher path"}, {"module": "Welcome Session", "wiifm": "I'll be able to deliver a welcome session that sets a student up with a study plan, clear goals and confidence in the Method.", "topic": "Coaching techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 30, "post": 0, "ilt": 0, "local": 0, "total": 30, "flag": "new", "note": "New module"}, {"module": "Advising Sessions", "wiifm": "I'll be able to run advising sessions that review progress, reset goals and keep students on track.", "topic": "Coaching techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 30, "post": 0, "ilt": 0, "local": 0, "total": 30, "flag": "new", "note": "New module"}, {"module": "Analyzing Student Progress", "wiifm": "I'll be able to read a student's progress data, spot who's falling behind, and act before they disengage.", "topic": "Coaching techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 30, "post": 0, "ilt": 0, "local": 0, "total": 30, "flag": "new", "note": "New module"}, {"module": "Phone Call Techniques", "wiifm": "I'll be able to handle student calls confidently, with a clear purpose and outcome for each one.", "topic": "Coaching techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 45, "post": 0, "ilt": 0, "local": 0, "total": 45, "flag": "carried", "note": "Rescued from the previous Learning Library"}, {"module": "Booking Techniques", "wiifm": "I'll be able to book students into the right classes at the right pace to keep them progressing.", "topic": "Coaching techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 45, "post": 0, "ilt": 0, "local": 0, "total": 45, "flag": "carried", "note": "Rescued from the previous Learning Library (was Booking Efficacy)"}, {"module": "Exceptional Customer Service", "wiifm": "I'll be able to give every student the kind of service that makes them want to stay and recommend us.", "topic": "Coaching techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 30, "post": 0, "ilt": 0, "local": 0, "total": 30, "flag": "new", "note": "New module"}, {"module": "Dealing Effectively with Complaints", "wiifm": "I'll be able to handle a complaint calmly, resolve it, and keep the student's trust.", "topic": "Coaching techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 30, "post": 0, "ilt": 0, "local": 0, "total": 30, "flag": "carried", "note": "Rescued from the previous Learning Library"}], "obs": [{"module": "Observation, role-play and performance review", "wiifm": "Run a welcome call, a welcome session and an advising session. Rapport, goal setting, progress conversation and follow-up checked live against the observation form.", "status": "Supplied locally", "mode": "Observed session", "emodule": 0, "post": 0, "ilt": 210, "local": 0, "total": 210, "flag": "new", "topic": "Sign-off"}]}, "Consultant": {"oldHours": 47.2, "newHours": 20.9, "pre": [{"module": "Complete Placement Test", "wiifm": "I’ll recognize how the Placement Test works and how Students are placed at the correct Level.", "status": "Supplied locally", "mode": "in-center or virtual", "emodule": 0, "post": 0, "ilt": 0, "local": 30, "total": 30, "flag": "carried"}, {"module": "Attend First Appointment/ Sales Presentation", "wiifm": "I’ll experience how Consultants provide solutions for the issues and needs of a Student within the Sales Presentation.", "status": "Supplied locally", "mode": "in-center or virtual", "emodule": 0, "post": 0, "ilt": 0, "local": 45, "total": 60, "flag": "carried"}, {"module": "Complete Student Onboarding (Digital Onboarding and Personal Welcome)", "wiifm": "I’ll discover how we onboard Students, introduce the Wall Street English Method, and motivate them through long and short-term goal setting.", "status": "Supplied locally", "mode": "in-center or virtual", "emodule": 0, "post": 0, "ilt": 0, "local": 75, "total": 75, "flag": "carried"}, {"module": "Multimedia study and Digital Student Workbook (one full Unit)", "wiifm": "I’ll familiarize myself with Core Course content and understand how Students interact with the Wall Street English Method.", "status": "Supplied locally", "mode": "in-center or virtual", "emodule": 0, "post": 0, "ilt": 0, "local": 250, "total": 270, "flag": "carried"}, {"module": "Attend Encounter", "wiifm": "I’ll discover how the Multimedia content in Core Course connects with classroom-based learning in Encounters.", "status": "Supplied locally", "mode": "in-center or virtual", "emodule": 0, "post": 0, "ilt": 0, "local": 60, "total": 60, "flag": "carried"}, {"module": "Attend Complementary Class", "wiifm": "I’ll be able to recognize the difference between Encounters and Complementary Classes.", "status": "Supplied locally", "mode": "in-center or virtual", "emodule": 0, "post": 0, "ilt": 0, "local": 60, "total": 60, "flag": "carried"}, {"module": "Attend Social Club", "wiifm": "I’ll be able to recognize how Social Clubs complement the full suite of Wall Street English classes, help to facilitate learning and maximize Student communication.", "status": "Supplied locally", "mode": "in-center or virtual", "emodule": 0, "post": 0, "ilt": 0, "local": 60, "total": 60, "flag": "carried"}, {"module": "Job Description: Roles and Responsibilities", "wiifm": "I'll understand my key roles and responsibilities within the organization.", "status": "Supplied locally", "mode": "Local session", "emodule": 0, "post": 0, "ilt": 0, "local": 60, "total": 60, "flag": "carried", "topic": "Student experience"}], "path": [{"module": "Who we are", "wiifm": "I'll be able to explain where Wall Street English came from, what we stand for, and what makes us premium.", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 20, "post": 0, "ilt": 0, "local": 0, "total": 20, "flag": "new", "note": "Replaces C01 and C02", "topic": "Essentials"}, {"module": "What we do", "wiifm": "I'll be able to explain the Method, the Learning System, the customer journey and how we compare with other ways of learning English.", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 20, "post": 0, "ilt": 0, "local": 0, "total": 20, "flag": "new", "note": "Replaces C03 to C07", "topic": "Essentials"}, {"module": "Sales foundations", "wiifm": "I'll be able to walk through every step of the Wall Street English sales process, recognize our buyer personas, and understand what makes people buy and what stops them.", "topic": "Sales techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 60, "post": 0, "ilt": 0, "local": 0, "total": 60, "flag": "new", "note": "Replaces S01 to S04"}, {"module": "Needs analysis + sales toolkit", "wiifm": "I'll be able to build trust, listen actively, balance push and pull, and run a needs analysis that gets to a prospect's real issues and needs.", "topic": "Sales techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 90, "post": 0, "ilt": 0, "local": 0, "total": 90, "flag": "new", "note": "Replaces S05 to S08"}, {"module": "Closing sales and treating objections", "wiifm": "I'll be able to present a personalized solution, close with confidence, and treat objections as buying signals rather than a no.", "topic": "Sales techniques", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 90, "post": 0, "ilt": 0, "local": 0, "total": 90, "flag": "new", "note": "Replaces S09 and S10"}, {"module": "The Production Presentation", "wiifm": "I'll be able to present the Wall Street English Method in a short, personal and enthusiastic way, and link it straight back to the needs analysis.", "topic": "Sales techniques", "status": "Supplied locally", "mode": "In the center", "emodule": 0, "post": 0, "ilt": 0, "local": 0, "total": 0, "flag": "wip"}, {"module": "Referrals", "wiifm": "I'll develop the perfect mindset when it comes to asking for Referrals. I'll understand the challenges other Consultants have and realize how to ask for Referrals in a natural way, leaing to more success in this important channel.", "status": "Supplied locally", "mode": "Local session", "emodule": 0, "post": 0, "ilt": 0, "local": 0, "total": 0, "flag": "wip", "topic": "Service and retention"}, {"module": "Renewals", "wiifm": "I will be able to recognize and apply processes, skills and tools which will make asking for Renewals more fun, easier and more successful. I will also be able to identify the most common objections from Students and confidently treat them. This will have a direct impact on my individual objectives, closing ratio and internal revenue KPIs.", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 0, "post": 0, "ilt": 0, "local": 0, "total": 0, "flag": "wip", "topic": "Service and retention"}, {"module": "Dealing Effectively with Complaints", "wiifm": "I'll be able to recongize the adult, parent and child state, and effectively apply the adult state when handling Student complaints.", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 30, "post": 0, "ilt": 0, "local": 0, "total": 30, "flag": "carried", "topic": "Service and retention"}, {"module": "Contract Creation Core Course", "wiifm": "I'll be able to create a Core Course contract via the system we use locally.", "status": "Supplied locally", "mode": "Local session", "emodule": 0, "post": 0, "ilt": 0, "local": 60, "total": 60, "flag": "carried", "topic": "Systems"}], "obs": [{"module": "Observation, role-play and performance review", "wiifm": "A full needs analysis, product presentation, solution and close, then objection handling under pressure. Observed and scored against the sales observation form.", "status": "Supplied locally", "mode": "Observed session", "emodule": 0, "post": 0, "ilt": 210, "local": 0, "total": 210, "flag": "new", "topic": "Sign-off"}]}, "Center Director": {"oldHours": 12.8, "newHours": 8.3, "pre": [{"module": "Job Description: Roles and Responsibilities", "wiifm": "I'll understand my key roles and responsibilities within the organization.", "status": "Supplied locally", "mode": "Local session", "emodule": 0, "post": 0, "ilt": 0, "local": 60, "total": 60, "flag": "carried", "topic": "Student experience"}], "path": [{"module": "Quality Control", "wiifm": "I'll explore my role as quality controller and ways of working with the Center team to guarantee quality.", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 20, "post": 0, "ilt": 0, "local": 0, "total": 20, "flag": "carried", "topic": "Management: Center and Staff"}, {"module": "Observations and Feedback", "wiifm": "I'll be able to create positive environment during observation and deliver productive staff-focused feedback.", "status": "Supplied locally", "mode": "Local session", "emodule": 0, "post": 0, "ilt": 0, "local": 60, "total": 60, "flag": "carried", "topic": "Management: Center and Staff"}, {"module": "Coaching Techniques", "wiifm": "I'll be able to use the GROW model to coach and support staff with performance, learning and development.", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 20, "post": 0, "ilt": 0, "local": 0, "total": 20, "flag": "carried", "topic": "Management: Center and Staff"}, {"module": "SOP for Meetings", "wiifm": "I'll be able to prepare and lead meetings that drive performance.", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 15, "post": 0, "ilt": 0, "local": 0, "total": 15, "flag": "carried", "topic": "Management: Center and Staff"}, {"module": "The 5Ps of Effective Meetings", "wiifm": "I'll be able to prepare and lead meetings that drive performance and boost staff motivation.", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 25, "post": 0, "ilt": 0, "local": 0, "total": 25, "flag": "carried", "topic": "Management: Center and Staff"}, {"module": "Delegating Effectively", "wiifm": "I'll be able to delegate tasks successfully and effectively in order to empower staff and create management efficiencies.", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 20, "post": 0, "ilt": 0, "local": 0, "total": 20, "flag": "carried", "topic": "Management: Center and Staff"}, {"module": "Time Management", "wiifm": "I'll be able to differentiate between important and urgent tasks to plan more effectively, and apply a variety of time management techniques depending on needs.", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 0, "post": 0, "ilt": 0, "local": 0, "total": 0, "flag": "wip", "topic": "Management: Center and Staff"}, {"module": "S12. Sales Management", "wiifm": "I’ll recognize the importance of measuring important KPIs of the Sales Funnel and understand how Sales develop during the month. I’ll recognize how a Sales Plan will help me prepare for and hold conversations with my Sales Team as well as how correct tracking and identifying areas of strength and improvement by Center, Consultant and channel will enable me to react accordingly. This will help me compare and evaluate which training or coaching is needed for which Center and/or Consultants.", "status": "On 360Learning", "mode": "Self-serve e-module", "emodule": 80, "post": 45, "ilt": 0, "local": 0, "total": 125, "flag": "carried", "topic": "Management: Center and Staff"}], "obs": [{"module": "Observation, role-play and performance review", "wiifm": "A sales coaching conversation with a consultant, a sales plan review, and a centre performance conversation with the team.", "status": "Supplied locally", "mode": "Observed session", "emodule": 0, "post": 0, "ilt": 150, "local": 0, "total": 150, "flag": "new", "topic": "Sign-off"}], "inheritsPre": true, "prereq": "the Sales Consultant path"}};
+const state = { role: Object.keys(DATA)[0], filter: "all" };
+
+const fmt = m => { if (!m) return "—"; const h = Math.floor(m/60), r = m%60;
+  return h ? (r ? `${h}h ${r}m` : `${h}h`) : `${r}m`; };
+const is360 = it => /360learning/i.test(it.status || "");
+
+function match(it){
+  if (state.filter === "360") return is360(it) && it.flag !== "wip";
+  if (state.filter === "local") return !is360(it) || it.flag === "wip";
+  if (state.filter === "new") return it.flag === "wip";
+  return true;
+}
+
+function itemNode(it){
+  const el = document.createElement("article");
+  el.className = "item" + (it.flag === "wip" ? " iswip" : "");
+  const on360 = is360(it);
+  const parts = [];
+  if (it.emodule) parts.push(`${it.emodule}m self-access`);
+  if (it.post) parts.push(`${it.post}m task`);
+  if (it.ilt) parts.push(`${it.ilt}m with the line manager`);
+  if (it.local) parts.push(`${it.local}m in center`);
+  const wip = it.flag === "wip";
+  const chips = wip
+    ? [`<span class="chip clocal">In center</span>`,
+       `<span class="chip cwip">Learning Library module under production</span>`]
+    : [`<span class="chip ${on360 ? "c360" : "clocal"}">${on360 ? "Learning Library" : "In center"}</span>`];
+  el.innerHTML = `
+    <div>
+      <div class="chips">${chips.join("")}</div>
+      <p class="m">${it.module}</p>
+    </div>
+    <div class="t"><span class="big">${wip ? "—" : fmt(it.total)}</span>
+      <span class="sub">${wip ? "in production" : (parts.join(" + ") || "&nbsp;")}</span></div>
+    <p class="w">${it.wiifm || ""}</p>
+    ${it.note ? `<p class="rep">${it.note}</p>` : ""}`;
+  return el;
+}
+
+function groupNodes(items, grouped){
+  const frag = document.createDocumentFragment();
+  const shown = items.filter(match);
+  if (!shown.length){
+    const p = document.createElement("p"); p.className = "empty";
+    p.textContent = "Nothing matches that filter."; frag.appendChild(p); return frag;
+  }
+  if (!grouped){
+    const list = document.createElement("div"); list.className = "list";
+    shown.forEach(i => list.appendChild(itemNode(i))); frag.appendChild(list); return frag;
+  }
+  const order = []; const byTopic = new Map();
+  shown.forEach(i => { const t = i.topic || "Other";
+    if (!byTopic.has(t)){ byTopic.set(t, []); order.push(t); } byTopic.get(t).push(i); });
+  order.forEach(t => {
+    const sec = document.createElement("section"); sec.className = "topic";
+    sec.innerHTML = `<h3>${t}</h3>`;
+    const list = document.createElement("div"); list.className = "list";
+    byTopic.get(t).forEach(i => list.appendChild(itemNode(i)));
+    sec.appendChild(list); frag.appendChild(sec);
+  });
+  return frag;
+}
+
+function phase(cls, title, blurb, body){
+  const el = document.createElement("section");
+  el.className = "phase" + (cls ? " " + cls : "");
+  el.innerHTML = `<span class="dot"></span><div class="phase-head"><h2>${title}</h2><p>${blurb}</p></div>`;
+  const b = document.createElement("div"); b.className = "phase-body"; b.appendChild(body);
+  el.appendChild(b); return el;
+}
+
+function render(){
+  const d = DATA[state.role];
+  const all = [...d.pre, ...d.path, ...d.obs];
+  const mins = f => all.filter(f).reduce((a,i)=>a+i.total,0);
+  const cut = Math.round((d.oldHours - d.newHours) / d.oldHours * 100);
+  const role = state.role.toLowerCase();
+
+  document.getElementById("summary").innerHTML = `
+    <div class="cell"><div class="n">${d.newHours}h</div><div class="k">Total time</div>
+      <div class="was">was ${d.oldHours}h</div></div>
+    <div class="cell cut"><div class="n">${cut}%</div><div class="k">Shorter than before</div></div>
+    <div class="cell on"><div class="n">${(mins(is360)/60).toFixed(1)}h</div><div class="k">Learning Library</div></div>
+    <div class="cell"><div class="n">${(mins(i=>!is360(i))/60).toFixed(1)}h</div><div class="k">In center</div></div>`;
+
+  const shown = all.filter(match).length;
+  document.getElementById("count").textContent =
+    state.filter === "all" ? "" : `Showing ${shown} of ${all.length}`;
+
+  const j = document.getElementById("journey"); j.innerHTML = "";
+
+  if (d.prereq){
+    const pre = document.createElement("div");
+    pre.className = "prereq";
+    pre.innerHTML = `<b>Prerequisite</b><span>${d.prereq}</span>`;
+    j.appendChild(pre);
+  }
+
+  const preBody = document.createElement("div");
+  if (d.inheritsPre || !d.pre.length){
+    const n = document.createElement("div"); n.className = "inherit";
+    n.innerHTML = `<p>Completed on ${d.prereq || "the previous path"}.</p>`;
+    preBody.appendChild(n);
+  }
+  if (d.pre.length) preBody.appendChild(groupNodes(d.pre, false));
+  j.appendChild(phase("", "Student experience",
+    `The ${role}'s first days in the center, as a student: placement test, onboarding, and each class type from the student's side.`, preBody));
+
+  const pathBody = document.createElement("div");
+  pathBody.appendChild(groupNodes(d.path, true));
+  j.appendChild(phase("mid", `${state.role} path`,
+    "Self-access content available on the Learning Library, in this order.", pathBody));
+
+  const obsBody = document.createElement("div");
+  obsBody.appendChild(groupNodes(d.obs, true));
+  j.appendChild(phase("end", "Observation and sign-off",
+    `One session with the line manager to close the path: role-play, feedback, and confirmation that the ${role} is ready.`, obsBody));
+}
+
+const rolesEl = document.getElementById("roles");
+Object.keys(DATA).forEach(r => {
+  const b = document.createElement("button");
+  b.className = "role"; b.textContent = r;
+  b.setAttribute("aria-pressed", r === state.role);
+  b.onclick = () => { state.role = r;
+    [...rolesEl.children].forEach(c => c.setAttribute("aria-pressed", c.textContent === r));
+    render(); };
+  rolesEl.appendChild(b);
+});
+document.querySelectorAll(".seg button").forEach(b => {
+  b.onclick = () => { state.filter = b.dataset.f;
+    document.querySelectorAll(".seg button").forEach(x => x.setAttribute("aria-pressed", x === b));
+    render(); };
+});
+render();
+</script>
+</body>
+</html>
